@@ -1,31 +1,3 @@
-terraform {
-  required_version = ">= 0.11.0"
-}
-
-// Workspace Data
-data "terraform_remote_state" "aws_vpc_prod" {
-  backend = "remote"
-
-  config = {
-    organization = "rogercorp"
-    workspaces = {
-      name = "aws-vpc-prod"
-    }
-  }
-}
-
-// Workspace Data
-data "terraform_remote_state" "aws_security_group" {
-  backend = "remote"
-
-  config = {
-    organization = "rogercorp"
-    workspaces = {
-      name = "aws-security-group-prod"
-    }
-  }
-}
-
 data "aws_ami" "rhel_ami" {
   most_recent = true
   owners      = ["309956199498"]
@@ -34,9 +6,6 @@ data "aws_ami" "rhel_ami" {
     name   = "name"
     values = ["*RHEL-7.3_HVM_GA-*"]
   }
-}
-
-provider "aws" {
 }
 
 resource "random_id" "name" {
