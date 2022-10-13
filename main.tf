@@ -34,14 +34,32 @@ resource "aws_key_pair" "awskey" {
   public_key = tls_private_key.awskey.public_key_openssh
 }
 
+resource "aws_security_group" "allow_all" {
+  name        = "allow-all-${random_id.name.hex}"
+  description = "Allow all inbound traffic"
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "ubuntu" {
   count                   = var.instance_count
   #ami                     = data.aws_ami.rhel_ami.id
   ami                     = data.aws_ami.ubuntu.id
   instance_type           = var.instance_type
   key_name                = aws_key_pair.awskey.key_name
-  vpc_security_group_ids  = var.vpc_security_group_ids
-  subnet_id               = var.subnet_id
+  security_groups         = [aws_security_group.allow_all.name]
 
   tags = {
     Name        = var.name
