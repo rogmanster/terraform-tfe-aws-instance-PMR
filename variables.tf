@@ -1,8 +1,5 @@
 #Instance
-variable "instance_count" {}
-variable "instance_type" {}
-variable "name" {}
-variable "owner" {}
-variable "ttl" {}
-#variable "subnet_id" {}
-#variable "vpc_security_group_ids" { type = list(string)}
+variable "instance_count" { description = "The number of EC2 Instances" }
+variable "instance_type" { description = "The type of EC2 Instances" }
+variable "name" { description = "The name of EC2 Instances" }
+variable "ttl" { description = "A TTL for when to terminate" }
