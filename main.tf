@@ -1,33 +1,3 @@
-#terraform {
-#  required_version = ">= 0.11.0"
-#}#
-
-#data "terraform_remote_state" "aws_vpc_prod" {
-#  backend = "remote"#
-
-#  config = {
-#    organization = "rogercorp"
-#    workspaces = {
-#      name = "aws-vpc-prod"
-#    }
-#  }
-#}#
-
-#data "terraform_remote_state" "aws_security_group" {
-#  backend = "remote"#
-
-#  config = {
-#    organization = "rogercorp"
-#    workspaces = {
-#      name = "aws-security-group-prod"
-#    }
-#  }
-#}#
-
-#data "aws_key_pair" "example" {
-#  key_name           = "rchao-key"
-#  include_public_key = true
-#}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
