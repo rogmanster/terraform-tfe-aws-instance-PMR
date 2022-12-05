@@ -15,9 +15,6 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-provider "aws" {
-}
-
 resource "random_id" "name" {
   byte_length = 4
 }
