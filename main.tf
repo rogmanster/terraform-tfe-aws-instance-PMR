@@ -1,33 +1,33 @@
-terraform {
-  required_version = ">= 0.11.0"
-}
+#terraform {
+#  required_version = ">= 0.11.0"
+#}#
 
-data "terraform_remote_state" "aws_vpc_prod" {
-  backend = "remote"
+#data "terraform_remote_state" "aws_vpc_prod" {
+#  backend = "remote"#
 
-  config = {
-    organization = "rogercorp"
-    workspaces = {
-      name = "aws-vpc-prod"
-    }
-  }
-}
+#  config = {
+#    organization = "rogercorp"
+#    workspaces = {
+#      name = "aws-vpc-prod"
+#    }
+#  }
+#}#
 
-data "terraform_remote_state" "aws_security_group" {
-  backend = "remote"
+#data "terraform_remote_state" "aws_security_group" {
+#  backend = "remote"#
 
-  config = {
-    organization = "rogercorp"
-    workspaces = {
-      name = "aws-security-group-prod"
-    }
-  }
-}
+#  config = {
+#    organization = "rogercorp"
+#    workspaces = {
+#      name = "aws-security-group-prod"
+#    }
+#  }
+#}#
 
-data "aws_key_pair" "example" {
-  key_name           = "rchao-key"
-  include_public_key = true
-}
+#data "aws_key_pair" "example" {
+#  key_name           = "rchao-key"
+#  include_public_key = true
+#}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -56,9 +56,12 @@ resource "aws_instance" "ubuntu" {
   count                   = var.instance_count
   ami                     = data.aws_ami.ubuntu.id
   instance_type           = var.instance_type
-  key_name                = data.aws_key_pair.example.key_name
-  vpc_security_group_ids  = [data.terraform_remote_state.aws_security_group.outputs.security_group_id]
-  subnet_id               = data.terraform_remote_state.aws_vpc_prod.outputs.public_subnets[0]
+  key_name                = var.key_name
+  vpc_security_group_ids  = var.security_group_id
+  subnet_id               = var.subnet_id
+  #key_name                = data.aws_key_pair.example.key_name
+  #vpc_security_group_ids  = [data.terraform_remote_state.aws_security_group.outputs.security_group_id]
+  #subnet_id               = data.terraform_remote_state.aws_vpc_prod.outputs.public_subnets[0]
 
   tags = {
     name        = var.name
